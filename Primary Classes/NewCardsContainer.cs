@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ATM_Model.Primary_Classes
+﻿namespace ATM_Model.Primary_Classes
 {
     internal class NewCardsContainer
     {

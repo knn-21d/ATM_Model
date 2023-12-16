@@ -8,24 +8,56 @@
         static ReceiptWriter _writer;
         static CardReader _reader;
         static bool _isReceiptNeeded;
+        static NewCardsContainer _newCardsContainer;
+        public static ServiceState State { get; set; } 
+
+        public enum ServiceState
+        {
+            NoCard,
+            NoPin,
+            Authorized
+        }
 
         static ATM()
         {
-            _cashStorage = new(0, 0, 0, 0);
+            _cashStorage = new(100, 100, 100, 100);
             _writer = new();
             _reader = new();
+            _newCardsContainer = new();
+            State = ServiceState.NoCard;
         }
+
+        public static int CreateAccount(int units, int cents)
+        {
+            Account account = new(units, cents);
+            return account.Id;
+        }
+
+        public static void ReleaseCard(Account account)
+        {
+            PlasticStorage.Release();
+        }
+
+        public static void ReleaseCard(Account account, int amount)
+        {
+            PlasticStorage.Release(amount);
+        }
+
+        public static List<Card> ClearContainer() => _newCardsContainer.Clear();
 
         public static void InsertCard(long cardNumber)
         {
             _reader.Insert(cardNumber);
+            State = ServiceState.NoPin;
         }
 
         public static Card? EjectCard() // проверить
         {
             var result = _currentCard;
             _currentCard = null;
+            _currentAccount = null;
             _reader.Eject();
+            State = ServiceState.NoCard;
             return result;
         }
 
@@ -45,6 +77,7 @@
                 if (_currentCard.TryAuthorize(pin))
                 {
                     _currentAccount = CentralDataStorage.FindAccountByCard(_currentCard.Number);
+                    State = ServiceState.Authorized;
                 }
             }
             catch (Exception ex)
@@ -52,7 +85,9 @@
                 if (ex.Message == "Карта заблокирована!")
                 {
                     PlasticStorage.Confiscate(EjectCard());
+                    State = ServiceState.NoCard;
                 }
+                throw ex; // хз
             }
         }
 

@@ -46,6 +46,8 @@
             oneButton = new Button();
             cardTextBox = new TextBox();
             displayListBox = new ListBox();
+            label = new Label();
+            button1 = new Button();
             SuspendLayout();
             // 
             // confirmButton
@@ -200,23 +202,42 @@
             cardTextBox.Location = new Point(12, 162);
             cardTextBox.Name = "cardTextBox";
             cardTextBox.PlaceholderText = "Вставьте карту...";
-            cardTextBox.Size = new Size(274, 23);
+            cardTextBox.Size = new Size(244, 23);
             cardTextBox.TabIndex = 20;
             // 
             // displayListBox
             // 
             displayListBox.FormattingEnabled = true;
             displayListBox.ItemHeight = 15;
-            displayListBox.Location = new Point(12, 17);
+            displayListBox.Location = new Point(12, 12);
             displayListBox.Name = "displayListBox";
-            displayListBox.Size = new Size(274, 139);
+            displayListBox.Size = new Size(274, 124);
             displayListBox.TabIndex = 21;
+            displayListBox.MouseDoubleClick += DisplayListBoxDoubleClick;
+            // 
+            // label
+            // 
+            label.Location = new Point(12, 139);
+            label.Name = "label";
+            label.Size = new Size(274, 23);
+            label.TabIndex = 22;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(262, 162);
+            button1.Name = "button1";
+            button1.Size = new Size(26, 23);
+            button1.TabIndex = 23;
+            button1.Text = "⏏";
+            button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(300, 421);
+            Controls.Add(button1);
+            Controls.Add(label);
             Controls.Add(displayListBox);
             Controls.Add(cardTextBox);
             Controls.Add(threeButton);
@@ -261,5 +282,7 @@
         private Button oneButton;
         private TextBox cardTextBox;
         private ListBox displayListBox;
+        private Label label;
+        private Button button1;
     }
 }
