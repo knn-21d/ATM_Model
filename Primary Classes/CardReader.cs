@@ -1,6 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal class CardReader
+    public class CardReader
     {
         Card? _currentCard;
 

@@ -1,6 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal static class CentralDataStorage
+    public static class CentralDataStorage
     {
         private readonly static List<Account> _accounts;
         public static List<Account> GetAccounts => new(_accounts);

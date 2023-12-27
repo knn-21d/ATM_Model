@@ -1,6 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal class ReceiptWriter
+    public class ReceiptWriter
     {
         public enum Operation
         {

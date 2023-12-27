@@ -1,6 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal class Account
+    public class Account
     {
         int _nextId = 1;
 

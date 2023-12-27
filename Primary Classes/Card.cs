@@ -1,6 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal class Card
+    public class Card
     {
         public long Number { get; }
         public string DisplayNumber
@@ -82,7 +82,7 @@
         {
             AccountId = accountId;
             Active = true;
-            CentralDataStorage.FindAccountById(accountId).AddCard(this);
+            CentralDataStorage.FindAccountById(accountId)!.AddCard(this);
             _triesLeft = 3;
         }
 
@@ -90,7 +90,7 @@
         {
             AccountId = 0;
             Active = false;
-            CentralDataStorage.FindAccountById(AccountId).RemoveCard(this);
+            CentralDataStorage.FindAccountById(AccountId)!.RemoveCard(this);
         }
     }
 }

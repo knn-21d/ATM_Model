@@ -1,6 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal class CashStorage
+    public class CashStorage
     {
         int _fiveThousands;
         int _thousands;

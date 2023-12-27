@@ -1,6 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal class NewCardsContainer
+    public class NewCardsContainer
     {
         readonly List<Card> _content;
 

@@ -1,14 +1,15 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
-    internal class ATM
+    public static class ATM
     {
         static Account? _currentAccount;
         static Card? _currentCard;
         static CashStorage _cashStorage;
+        static PlasticStorage _plasticStorage;
         static ReceiptWriter _writer;
         static CardReader _reader;
-        static bool _isReceiptNeeded;
         static NewCardsContainer _newCardsContainer;
+        static bool _isReceiptNeeded;
         public static ServiceState State { get; set; } 
 
         public enum ServiceState
@@ -24,6 +25,7 @@
             _writer = new();
             _reader = new();
             _newCardsContainer = new();
+            _plasticStorage = new();
             State = ServiceState.NoCard;
         }
 
@@ -33,14 +35,14 @@
             return account.Id;
         }
 
-        public static void ReleaseCard(Account account)
+        public static void ReleaseCard()
         {
-            PlasticStorage.Release();
+            _plasticStorage.Release(_currentAccount!.Id);
         }
 
-        public static void ReleaseCard(Account account, int amount)
+        public static void ReleaseCard(int amount)
         {
-            PlasticStorage.Release(amount);
+            _plasticStorage.Release(amount, _currentAccount!.Id);
         }
 
         public static List<Card> ClearContainer() => _newCardsContainer.Clear();
@@ -84,7 +86,7 @@
             {
                 if (ex.Message == "Карта заблокирована!")
                 {
-                    PlasticStorage.Confiscate(EjectCard());
+                    _plasticStorage.Confiscate(EjectCard()!);
                     State = ServiceState.NoCard;
                 }
                 throw ex; // хз
@@ -98,16 +100,16 @@
 
             if (_isReceiptNeeded)
             {
-                _writer.Write(_currentAccount.Id, _currentCard.Number, units, ReceiptWriter.Operation.Send, cardNumber);
+                _writer.Write(_currentAccount!.Id, _currentCard!.Number, units, ReceiptWriter.Operation.Send, cardNumber);
                 _isReceiptNeeded = false;
             }
         }
 
-        //public static void SendMoneyToAccount(int accountId, int units, int cents) // проверить
-        //{
-        //    CentralDataStorage.FindAccountById(accountId)?.Add(units, cents);
-        //    _currentAccount?.Release(units, cents);
-        //}
+        public static void SendMoneyToAccount(int accountId, int units, int cents) // проверить
+        {
+            CentralDataStorage.FindAccountById(accountId)?.Add(units, cents);
+            _currentAccount?.Release(units, cents);
+        }
 
         public static void CashToBalance(int fiveThousands, int thousands, int fiveHundreds, int hundreds) // проверить
         {
@@ -117,7 +119,7 @@
 
             if (_isReceiptNeeded)
             {
-                _writer.Write(_currentAccount.Id, _currentCard.Number, amount, ReceiptWriter.Operation.CashIn, null);
+                _writer.Write(_currentAccount!.Id, _currentCard!.Number, amount, ReceiptWriter.Operation.CashIn, null);
                 _isReceiptNeeded = false;
             }
         }
@@ -207,7 +209,7 @@
 
             if (_isReceiptNeeded)
             {
-                _writer.Write(_currentAccount.Id, _currentCard.Number, amount, ReceiptWriter.Operation.CashOut, null);
+                _writer.Write(_currentAccount!.Id, _currentCard!.Number, amount, ReceiptWriter.Operation.CashOut, null);
                 _isReceiptNeeded = false;
             }
         }

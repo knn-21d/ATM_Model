@@ -48,42 +48,34 @@ namespace ATM_Model
         {
             int index = displayListBox.IndexFromPoint(e.Location);
             var item = index == -1 || index >= displayListBox.Items.Count ? null : displayListBox.Items[index];
-            if (item is null) return;
-            else if ((string)item == "Выход")
+
+            switch (item)
             {
-                ATM.EjectCard();
-                displayListBox.Items.Remove("Снять наличные");
-                displayListBox.Items.Remove("Внести наличные");
-                displayListBox.Items.Remove("Отправить перевод");
-                displayListBox.Items.Remove("Выход");
+                case "Открыть счёт":
+                    new CreateAccountArgsForm().ShowDialog();
+                    break;
+                case "Выпустить карту":
+                    new ReleaseCardArgsForm().ShowDialog();
+                    break;
+                case "Снять наличные":
+                    new CashOutArgsForm().ShowDialog();
+                    break;
+                case "Внести наличные":
+                    new CashInArgsForm().ShowDialog();
+                    break;
+                case "Отправить перевод":
+                    new TransferArgsForm().ShowDialog();
+                    break;
+                case "Выход":
+                    ATM.EjectCard();
+                    displayListBox.Items.Remove("Снять наличные");
+                    displayListBox.Items.Remove("Внести наличные");
+                    displayListBox.Items.Remove("Отправить перевод");
+                    displayListBox.Items.Remove("Выход");
+                    break;
+                default:
+                    return;
             }
-            else
-            {
-                new ArgsForm((string)item).ShowDialog();
-            }
-            //switch (item)
-            //{
-            //    case "Открыть счёт":
-            //        // создать окно с выбором суммы на счету
-            //        break;
-            //    case "Выпустить карту":
-            //        // создать окно с выбором количества карт
-            //        break;
-            //    case "Снять наличные":
-            //        // создать окно с выбором суммы
-            //        break;
-            //    case "Внести наличные":
-            //        // создать окно с указанием набора банкнот
-            //        break;
-            //    case "Отправить перевод":
-            //        // создать окно с указанием суммы и адреса
-            //        break;
-            //    case "Выход":
-            //        ATM.EjectCard();
-            //        break;
-            //    default:
-            //        break;
-            //}
         }
     }
 }
