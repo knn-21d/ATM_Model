@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             confirmButton = new Button();
             cancelButton = new Button();
             pointButton = new Button();
@@ -48,12 +49,14 @@
             displayListBox = new ListBox();
             label = new Label();
             button1 = new Button();
+            newCardsButton = new Button();
+            newCardsAmountLabel = new Label();
             SuspendLayout();
             // 
             // confirmButton
             // 
             confirmButton.ForeColor = Color.FromArgb(0, 192, 0);
-            confirmButton.Location = new Point(238, 359);
+            confirmButton.Location = new Point(238, 397);
             confirmButton.Name = "confirmButton";
             confirmButton.Size = new Size(50, 50);
             confirmButton.TabIndex = 4;
@@ -64,7 +67,7 @@
             // cancelButton
             // 
             cancelButton.ForeColor = Color.Red;
-            cancelButton.Location = new Point(12, 359);
+            cancelButton.Location = new Point(12, 397);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(50, 50);
             cancelButton.TabIndex = 5;
@@ -73,7 +76,7 @@
             // 
             // pointButton
             // 
-            pointButton.Location = new Point(68, 359);
+            pointButton.Location = new Point(68, 397);
             pointButton.Name = "pointButton";
             pointButton.Size = new Size(50, 50);
             pointButton.TabIndex = 6;
@@ -82,7 +85,7 @@
             // 
             // zeroButton
             // 
-            zeroButton.Location = new Point(124, 359);
+            zeroButton.Location = new Point(124, 397);
             zeroButton.Name = "zeroButton";
             zeroButton.Size = new Size(50, 50);
             zeroButton.TabIndex = 7;
@@ -91,7 +94,7 @@
             // 
             // tripleZeroButton
             // 
-            tripleZeroButton.Location = new Point(180, 359);
+            tripleZeroButton.Location = new Point(180, 397);
             tripleZeroButton.Name = "tripleZeroButton";
             tripleZeroButton.Size = new Size(50, 50);
             tripleZeroButton.TabIndex = 8;
@@ -100,7 +103,7 @@
             // 
             // rightArrowButton
             // 
-            rightArrowButton.Location = new Point(236, 303);
+            rightArrowButton.Location = new Point(236, 341);
             rightArrowButton.Name = "rightArrowButton";
             rightArrowButton.Size = new Size(50, 50);
             rightArrowButton.TabIndex = 13;
@@ -109,7 +112,7 @@
             // 
             // nineButton
             // 
-            nineButton.Location = new Point(180, 303);
+            nineButton.Location = new Point(180, 341);
             nineButton.Name = "nineButton";
             nineButton.Size = new Size(50, 50);
             nineButton.TabIndex = 12;
@@ -118,7 +121,7 @@
             // 
             // eightButton
             // 
-            eightButton.Location = new Point(124, 303);
+            eightButton.Location = new Point(124, 341);
             eightButton.Name = "eightButton";
             eightButton.Size = new Size(50, 50);
             eightButton.TabIndex = 11;
@@ -127,7 +130,7 @@
             // 
             // sevenButton
             // 
-            sevenButton.Location = new Point(68, 303);
+            sevenButton.Location = new Point(68, 341);
             sevenButton.Name = "sevenButton";
             sevenButton.Size = new Size(50, 50);
             sevenButton.TabIndex = 10;
@@ -136,7 +139,7 @@
             // 
             // leftArrowButton
             // 
-            leftArrowButton.Location = new Point(12, 303);
+            leftArrowButton.Location = new Point(12, 341);
             leftArrowButton.Name = "leftArrowButton";
             leftArrowButton.Size = new Size(50, 50);
             leftArrowButton.TabIndex = 9;
@@ -145,7 +148,7 @@
             // 
             // sixButton
             // 
-            sixButton.Location = new Point(180, 247);
+            sixButton.Location = new Point(180, 285);
             sixButton.Name = "sixButton";
             sixButton.Size = new Size(50, 50);
             sixButton.TabIndex = 16;
@@ -154,7 +157,7 @@
             // 
             // fiveButton
             // 
-            fiveButton.Location = new Point(124, 247);
+            fiveButton.Location = new Point(124, 285);
             fiveButton.Name = "fiveButton";
             fiveButton.Size = new Size(50, 50);
             fiveButton.TabIndex = 15;
@@ -163,7 +166,7 @@
             // 
             // fourButton
             // 
-            fourButton.Location = new Point(68, 247);
+            fourButton.Location = new Point(68, 285);
             fourButton.Name = "fourButton";
             fourButton.Size = new Size(50, 50);
             fourButton.TabIndex = 14;
@@ -172,7 +175,7 @@
             // 
             // threeButton
             // 
-            threeButton.Location = new Point(180, 191);
+            threeButton.Location = new Point(180, 229);
             threeButton.Name = "threeButton";
             threeButton.Size = new Size(50, 50);
             threeButton.TabIndex = 19;
@@ -181,7 +184,7 @@
             // 
             // twoButton
             // 
-            twoButton.Location = new Point(124, 191);
+            twoButton.Location = new Point(124, 229);
             twoButton.Name = "twoButton";
             twoButton.Size = new Size(50, 50);
             twoButton.TabIndex = 18;
@@ -190,7 +193,7 @@
             // 
             // oneButton
             // 
-            oneButton.Location = new Point(68, 191);
+            oneButton.Location = new Point(68, 229);
             oneButton.Name = "oneButton";
             oneButton.Size = new Size(50, 50);
             oneButton.TabIndex = 17;
@@ -199,7 +202,7 @@
             // 
             // cardTextBox
             // 
-            cardTextBox.Location = new Point(12, 162);
+            cardTextBox.Location = new Point(12, 165);
             cardTextBox.Name = "cardTextBox";
             cardTextBox.PlaceholderText = "Вставьте карту...";
             cardTextBox.Size = new Size(244, 23);
@@ -224,18 +227,43 @@
             // 
             // button1
             // 
-            button1.Location = new Point(262, 162);
+            button1.Location = new Point(260, 165);
             button1.Name = "button1";
             button1.Size = new Size(26, 23);
             button1.TabIndex = 23;
             button1.Text = "⏏";
             button1.UseVisualStyleBackColor = true;
             // 
+            // newCardsButton
+            // 
+            newCardsButton.Image = (Image)resources.GetObject("newCardsButton.Image");
+            newCardsButton.Location = new Point(12, 194);
+            newCardsButton.Name = "newCardsButton";
+            newCardsButton.Size = new Size(42, 42);
+            newCardsButton.TabIndex = 24;
+            newCardsButton.UseVisualStyleBackColor = true;
+            newCardsButton.Click += NewCardsButtonClick;
+            // 
+            // newCardsAmountLabel
+            // 
+            newCardsAmountLabel.BackColor = Color.Transparent;
+            newCardsAmountLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            newCardsAmountLabel.ForeColor = Color.Red;
+            newCardsAmountLabel.Location = new Point(35, 221);
+            newCardsAmountLabel.Name = "newCardsAmountLabel";
+            newCardsAmountLabel.Size = new Size(19, 15);
+            newCardsAmountLabel.TabIndex = 25;
+            newCardsAmountLabel.Text = "12";
+            newCardsAmountLabel.TextAlign = ContentAlignment.TopRight;
+            newCardsAmountLabel.Visible = false;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(300, 421);
+            ClientSize = new Size(300, 459);
+            Controls.Add(newCardsAmountLabel);
+            Controls.Add(newCardsButton);
             Controls.Add(button1);
             Controls.Add(label);
             Controls.Add(displayListBox);
@@ -284,5 +312,7 @@
         private ListBox displayListBox;
         private Label label;
         private Button button1;
+        private Button newCardsButton;
+        private Label newCardsAmountLabel;
     }
 }

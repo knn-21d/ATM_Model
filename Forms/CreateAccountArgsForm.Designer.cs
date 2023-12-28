@@ -47,7 +47,6 @@
             // 
             // fiveHundredsNumericUpDown
             // 
-            fiveHundredsNumericUpDown.Enabled = false;
             fiveHundredsNumericUpDown.Location = new Point(113, 58);
             fiveHundredsNumericUpDown.Name = "fiveHundredsNumericUpDown";
             fiveHundredsNumericUpDown.Size = new Size(42, 23);
@@ -55,7 +54,6 @@
             // 
             // thousandsNumericUpDown
             // 
-            thousandsNumericUpDown.Enabled = false;
             thousandsNumericUpDown.Location = new Point(60, 58);
             thousandsNumericUpDown.Name = "thousandsNumericUpDown";
             thousandsNumericUpDown.Size = new Size(42, 23);
@@ -63,7 +61,6 @@
             // 
             // fiveThousandsNumericUpDown
             // 
-            fiveThousandsNumericUpDown.Enabled = false;
             fiveThousandsNumericUpDown.Location = new Point(12, 58);
             fiveThousandsNumericUpDown.Name = "fiveThousandsNumericUpDown";
             fiveThousandsNumericUpDown.Size = new Size(42, 23);
@@ -71,7 +68,6 @@
             // 
             // hundredsNumericUpDown
             // 
-            hundredsNumericUpDown.Enabled = false;
             hundredsNumericUpDown.Location = new Point(161, 58);
             hundredsNumericUpDown.Name = "hundredsNumericUpDown";
             hundredsNumericUpDown.Size = new Size(42, 23);

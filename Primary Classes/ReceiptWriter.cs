@@ -17,14 +17,14 @@
             switch (operation)
             {
                 case Operation.CashOut:
-                    message = $"Снято {-operationResult} со счёта {accountId} по карте {card?.DisplayNumber}";
+                    message = $"Снято {-operationResult} со счёта {accountId} по карте {card?.DisplayCoveredNumber}";
                     break;
                 case Operation.CashIn:
-                    message = $"Зачислено {operationResult} на счёт {accountId} по карте {card?.DisplayNumber}";
+                    message = $"Зачислено {operationResult} на счёт {accountId} по карте {card?.DisplayCoveredNumber}";
                     break;
                 case Operation.Send:
                     Card? receiverCard = CentralDataStorage.FindCard((long)receiverCardNumber);
-                    message = $"Отправлено {operationResult} на карту {receiverCard?.DisplayNumber}";
+                    message = $"Отправлено {operationResult} на карту {receiverCard?.DisplayCoveredNumber}";
                     break;
                 default:
                     message = "Не удалось провести операцию!";

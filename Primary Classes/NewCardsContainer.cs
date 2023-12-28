@@ -2,7 +2,9 @@
 {
     public class NewCardsContainer
     {
-        readonly List<Card> _content;
+        List<Card> _content;
+
+        public int Amount => _content.Count;
 
         public NewCardsContainer()
         {
@@ -11,7 +13,11 @@
 
         public void Receive(List<Card> cards) => _content.Concat(cards);
 
-        public void Receive(Card card) => _content.Add(card);
+        public void Receive(Card card)
+        {
+            _content.Add(card);
+            int n = Amount;
+        }
 
         public List<Card> Clear()
         {

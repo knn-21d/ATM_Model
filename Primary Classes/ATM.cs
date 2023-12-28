@@ -25,14 +25,16 @@
             _writer = new();
             _reader = new();
             _newCardsContainer = new();
-            _plasticStorage = new();
+            _plasticStorage = new(_newCardsContainer);
+            _plasticStorage.Load(100);
             State = ServiceState.NoCard;
         }
 
         public static int CreateAccount(int units, int cents)
         {
-            Account account = new(units, cents);
-            return account.Id;
+            _currentAccount = new(units, cents);
+            ReleaseCard();
+            return _currentAccount.Id;
         }
 
         public static void ReleaseCard()
@@ -65,7 +67,7 @@
 
         public static Account? ReceiveAccountDetails(long cardNumber) => CentralDataStorage.FindAccountByCard(cardNumber); // проверить
 
-        public static void Authorize(int pin) // проверить
+        public static void Authorize(string pin) // проверить
         {
             _currentCard = _reader.Read();
 
@@ -224,5 +226,7 @@
         }
 
         public static void RequestReceipt() => _isReceiptNeeded = true;
+
+        public static int NewCardsAmount() => _newCardsContainer.Amount;
     }
 }

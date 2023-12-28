@@ -6,11 +6,11 @@
         private readonly List<Card> _confiscatedCards;
         private readonly NewCardsContainer _newCardsContainer;
 
-        public PlasticStorage()
+        public PlasticStorage(NewCardsContainer container)
         {
             _unusedCards = new();
             _confiscatedCards = new();
-            _newCardsContainer = new();
+            _newCardsContainer = container;
         }
 
         public void Confiscate(Card card) // проверить
@@ -24,6 +24,7 @@
             else
             {
                 Card card = _unusedCards.ElementAt(0);
+                _unusedCards.Remove(card);
                 card.Activate(accountId);
                 _newCardsContainer.Receive(card);
             }

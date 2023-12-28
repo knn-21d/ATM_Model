@@ -29,7 +29,7 @@ namespace ATM_Model
                 case ATM.ServiceState.NoPin:
                     try
                     {
-                        ATM.Authorize(0000);
+                        ATM.Authorize("");
                     }
                     catch (Exception ex)
                     {
@@ -53,9 +53,19 @@ namespace ATM_Model
             {
                 case "Открыть счёт":
                     new CreateAccountArgsForm().ShowDialog();
+                    if (ATM.NewCardsAmount() > 0)
+                    {
+                        newCardsAmountLabel.Visible = true;
+                        newCardsAmountLabel.Text = ATM.NewCardsAmount().ToString();
+                    }
                     break;
                 case "Выпустить карту":
                     new ReleaseCardArgsForm().ShowDialog();
+                    if (ATM.NewCardsAmount() > 0)
+                    {
+                        newCardsAmountLabel.Visible = true;
+                        newCardsAmountLabel.Text = ATM.NewCardsAmount().ToString();
+                    }
                     break;
                 case "Снять наличные":
                     new CashOutArgsForm().ShowDialog();
@@ -75,6 +85,19 @@ namespace ATM_Model
                     break;
                 default:
                     return;
+            }
+        }
+
+        private void NewCardsButtonClick(object sender, EventArgs e)
+        {
+            if (ATM.NewCardsAmount() == 0)
+            {
+                MessageBox.Show("Контейнер пуст!");
+            }
+            else
+            {
+                new CardsContainerForm(ATM.ClearContainer()).ShowDialog();
+                newCardsAmountLabel.Visible = false;
             }
         }
     }

@@ -1,42 +1,48 @@
-﻿namespace ATM_Model.Primary_Classes
+﻿using System.ComponentModel;
+
+namespace ATM_Model.Primary_Classes
 {
     public class Card
     {
+        [Browsable(false)] // чтобы некоторые свойства не отображались в таблице
         public long Number { get; }
         public string DisplayNumber
         {
-            get // проверить
+            get
             {
                 char[] result = new char[19];
                 string number = Number.ToString();
-                for (int i = result.Length - 1; i >= 0; i--)
+
+                for (int i = 0; i < 17 - number.Length; i++) // дорисовка незначащих нулей
                 {
-                    if ((i + 1) % 5 == 0 && i > 0)
+                    number = '0' + number;
+                }
+
+                int j = 0;
+                for (int i = 0; i < result.Length; i++) // разбиение пробелами
+                {
+                    if (i == 4 || i == 9 || i == 14)
                     {
                         result[i] = ' ';
-                        continue;
-                    }
-
-                    if (i > result.Length - 9 && i < result.Length - 5)
-                    {
-                        result[i] = '*';
-                    }
-                    else if (number.Length - i - 1 > 0)
-                    {
-                        result[i] = number[number.Length - i];
+                        j--;
                     }
                     else
                     {
-                        result[i] = '0';
+                        result[i] = number[j];
                     }
+                    j++;
                 }
-
                 return new string(result);
             }
         }
-        public int Pin { get => (int)(Number % 10000); }
+        [Browsable(false)]
+        public string DisplayCoveredNumber => DisplayNumber.Replace(DisplayNumber.Substring(10, 4), "****");
+        public string Pin => DisplayNumber.Substring(15);
+        [Browsable(false)]
         public int AccountId { get; private set; }
+        [Browsable(false)]
         public bool Active { get; private set; }
+
         private int _triesLeft;
 
         public Card() // проверить
@@ -56,7 +62,7 @@
             CentralDataStorage.AddCard(this);
         }
 
-        public bool TryAuthorize(int pin)
+        public bool TryAuthorize(string pin)
         {
             if (pin == Pin)
             {
