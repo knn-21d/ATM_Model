@@ -43,6 +43,7 @@
             cashOutNumericUpDown.Name = "cashOutNumericUpDown";
             cashOutNumericUpDown.Size = new Size(191, 23);
             cashOutNumericUpDown.TabIndex = 10;
+            cashOutNumericUpDown.ValueChanged += CashOutNumericUpDownValueChanged;
             // 
             // InstructionLabel
             // 

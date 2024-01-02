@@ -7,19 +7,7 @@ namespace ATM_Model.Forms
         public TransferArgsForm()
         {
             InitializeComponent();
-        }
-
-        private void CardCheckCheckedChanged(object sender, EventArgs e) // протестировать и возможно переименовать
-        {
             cardCheck.Checked = true;
-            accountCheck.Checked = false;
-            addressTextBox.PlaceholderText = "Введите номер счёта...";
-        }
-
-        private void AccountCheckCheckedChanged(object sender, EventArgs e) // см. комментарий выше
-        {
-            accountCheck.Checked = true;
-            cardCheck.Checked = false;
             addressTextBox.PlaceholderText = "Введите номер карты...";
         }
 
@@ -35,6 +23,10 @@ namespace ATM_Model.Forms
                 {
                     ATM.SendMoneyToAccount(Convert.ToInt32(addressTextBox.Text), (int)unitsNumericUpDown.Value, (int)centsNumericUpDown.Value);
                 }
+                MessageBox.Show("Перевод успешно отправлен!");
+                addressTextBox.Clear();
+                unitsNumericUpDown.Value = 0;
+                centsNumericUpDown.Value = 0;
             }
             catch (Exception ex)
             {
@@ -45,6 +37,20 @@ namespace ATM_Model.Forms
         private void CancelButtonClick(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void AccountCheckMouseClick(object sender, MouseEventArgs e)
+        {
+            accountCheck.Checked = true;
+            cardCheck.Checked = false;
+            addressTextBox.PlaceholderText = "Введите номер счёта...";
+        }
+
+        private void CardCheckMouseClick(object sender, MouseEventArgs e)
+        {
+            accountCheck.Checked = false;
+            cardCheck.Checked = true;
+            addressTextBox.PlaceholderText = "Введите номер карты...";
         }
     }
 }

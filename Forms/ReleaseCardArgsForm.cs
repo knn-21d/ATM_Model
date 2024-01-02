@@ -14,6 +14,7 @@ namespace ATM_Model.Forms
             try
             {
                 ATM.ReleaseCard((int)cardsAmountNumericUpDown.Value);
+                Close();
             }
             catch (Exception ex)
             {

@@ -51,7 +51,7 @@
             accountCheck.TabStop = true;
             accountCheck.Text = "По счёту";
             accountCheck.UseVisualStyleBackColor = true;
-            accountCheck.CheckedChanged += AccountCheckCheckedChanged;
+            accountCheck.MouseClick += AccountCheckMouseClick;
             // 
             // cardCheck
             // 
@@ -64,7 +64,7 @@
             cardCheck.TabStop = true;
             cardCheck.Text = "По карте";
             cardCheck.UseVisualStyleBackColor = true;
-            cardCheck.CheckedChanged += CardCheckCheckedChanged;
+            cardCheck.MouseClick += CardCheckMouseClick;
             // 
             // addressTextBox
             // 
@@ -72,7 +72,6 @@
             addressTextBox.Name = "addressTextBox";
             addressTextBox.Size = new Size(191, 23);
             addressTextBox.TabIndex = 19;
-            addressTextBox.Visible = false;
             // 
             // cancelButton
             // 

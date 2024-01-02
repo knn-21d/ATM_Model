@@ -19,9 +19,11 @@
             int n = Amount;
         }
 
+        public List<Card> GetCards() => new(_content);
+
         public List<Card> Clear()
         {
-            var result = new List<Card>(_content);
+            var result = GetCards();
             _content.Clear();
             return result;
         }

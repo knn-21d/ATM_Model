@@ -34,17 +34,39 @@
         {
             _currentAccount = new(units, cents);
             ReleaseCard();
+
+            if (_isReceiptNeeded)
+            {
+                _writer.Write(_currentAccount.Id, units, ReceiptWriter.Operation.AccountCreated, null, null, _currentAccount.Cards[0]);
+                _isReceiptNeeded = false;
+            }
+
             return _currentAccount.Id;
         }
 
         public static void ReleaseCard()
         {
             _plasticStorage.Release(_currentAccount!.Id);
+
+            if (_isReceiptNeeded)
+            {
+                _writer.Write(_currentAccount.Id, 0, ReceiptWriter.Operation.CardReleased, null, null, _newCardsContainer.GetCards()[_newCardsContainer.Amount - 1]);
+            }
         }
 
         public static void ReleaseCard(int amount)
         {
+            int oldCount = _newCardsContainer.Amount;
             _plasticStorage.Release(amount, _currentAccount!.Id);
+
+            if (_isReceiptNeeded)
+            {
+                for (int i = oldCount; i < _newCardsContainer.Amount - 1; i++)
+                {
+                    _writer.Write(_currentAccount!.Id, 0, ReceiptWriter.Operation.CardReleased, null, null, _newCardsContainer.GetCards()[i]);
+                }
+                _isReceiptNeeded = false;
+            }
         }
 
         public static List<Card> ClearContainer() => _newCardsContainer.Clear();
@@ -52,10 +74,17 @@
         public static void InsertCard(long cardNumber)
         {
             _reader.Insert(cardNumber);
+            _currentCard = _reader.Read();
+
+            if (_currentCard is null)
+            {
+                throw new Exception("Карта невалидна!");
+            }
+
             State = ServiceState.NoPin;
         }
 
-        public static Card? EjectCard() // проверить
+        public static Card? EjectCard()
         {
             var result = _currentCard;
             _currentCard = null;
@@ -67,50 +96,64 @@
 
         public static Account? ReceiveAccountDetails(long cardNumber) => CentralDataStorage.FindAccountByCard(cardNumber); // проверить
 
-        public static void Authorize(string pin) // проверить
+        public static void Authorize(string pin)
         {
-            _currentCard = _reader.Read();
-
-            if (_currentCard is null)
-            {
-                throw new Exception("Карта невалидна!");
-            }
-            
             try
             {
-                if (_currentCard.TryAuthorize(pin))
+                if (_currentCard!.TryAuthorize(pin))
                 {
                     _currentAccount = CentralDataStorage.FindAccountByCard(_currentCard.Number);
                     State = ServiceState.Authorized;
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex.Message == "Карта заблокирована!")
             {
-                if (ex.Message == "Карта заблокирована!")
-                {
-                    _plasticStorage.Confiscate(EjectCard()!);
-                    State = ServiceState.NoCard;
-                }
-                throw ex; // хз
+                _plasticStorage.Confiscate(EjectCard()!);
+                State = ServiceState.NoCard;
+                throw;
             }
         }
 
         public static void SendMoneyToCard(long cardNumber, int units, int cents) // проверить
         {
-            CentralDataStorage.FindAccountByCard(cardNumber)?.Add(units, cents);
-            _currentAccount?.Release(units, cents);
+            Account? receiver = CentralDataStorage.FindAccountByCard(cardNumber);
+            if (receiver is not null)
+            {
+                _currentAccount!.Release(units, cents);
+                receiver.Add(units, cents);
+            }
+            else
+            {
+                throw new Exception("Карта получателя не найдена!");
+            }
 
             if (_isReceiptNeeded)
             {
-                _writer.Write(_currentAccount!.Id, _currentCard!.Number, units, ReceiptWriter.Operation.Send, cardNumber);
+                _writer.Write(_currentAccount!.Id, units, ReceiptWriter.Operation.SendToCard, CentralDataStorage.FindCard(cardNumber), null, null);
                 _isReceiptNeeded = false;
             }
         }
 
         public static void SendMoneyToAccount(int accountId, int units, int cents) // проверить
         {
-            CentralDataStorage.FindAccountById(accountId)?.Add(units, cents);
-            _currentAccount?.Release(units, cents);
+            Account? receiver = CentralDataStorage.FindAccountById(accountId);
+
+            if (receiver is not null)
+            {
+                _currentAccount!.Release(units, cents);
+                receiver!.Add(units, cents);
+            }
+            else
+            {
+                _isReceiptNeeded = false;
+                throw new Exception("Номер счёта получателя не найден!");
+            }
+
+            if (_isReceiptNeeded)
+            {
+                _writer.Write(_currentAccount!.Id, units, ReceiptWriter.Operation.SendToAccount, null, receiver, null);
+                _isReceiptNeeded = false;
+            }
         }
 
         public static void CashToBalance(int fiveThousands, int thousands, int fiveHundreds, int hundreds) // проверить
@@ -121,7 +164,7 @@
 
             if (_isReceiptNeeded)
             {
-                _writer.Write(_currentAccount!.Id, _currentCard!.Number, amount, ReceiptWriter.Operation.CashIn, null);
+                _writer.Write(_currentAccount!.Id, amount, ReceiptWriter.Operation.CashIn, null, null, null);
                 _isReceiptNeeded = false;
             }
         }
@@ -211,7 +254,7 @@
 
             if (_isReceiptNeeded)
             {
-                _writer.Write(_currentAccount!.Id, _currentCard!.Number, amount, ReceiptWriter.Operation.CashOut, null);
+                _writer.Write(_currentAccount!.Id, amount, ReceiptWriter.Operation.CashOut, null, null, null);
                 _isReceiptNeeded = false;
             }
         }
@@ -228,5 +271,13 @@
         public static void RequestReceipt() => _isReceiptNeeded = true;
 
         public static int NewCardsAmount() => _newCardsContainer.Amount;
+
+        public static string GetBalance() => _currentAccount!.DisplayBalance;
+
+        public static Card? GetCard() => _currentCard;
+
+        public static bool HasPrintedReceipts() => _writer.HasPrintedReceipts;
+
+        public static List<string> ClearReceipts() => _writer.ClearReceipts();
     }
 }

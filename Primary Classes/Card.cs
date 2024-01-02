@@ -6,17 +6,17 @@ namespace ATM_Model.Primary_Classes
     {
         [Browsable(false)] // чтобы некоторые свойства не отображались в таблице
         public long Number { get; }
-        public string DisplayNumber
+        public string DisplayNumber // отображение типа "0000 0000 0000 0000"
         {
             get
             {
                 char[] result = new char[19];
                 string number = Number.ToString();
 
-                for (int i = 0; i < 17 - number.Length; i++) // дорисовка незначащих нулей
-                {
-                    number = '0' + number;
-                }
+                //for (int i = 0; i < 17 - number.Length; i++) // дорисовка незначащих нулей
+                //{
+                //    number = '0' + number;
+                //}
 
                 int j = 0;
                 for (int i = 0; i < result.Length; i++) // разбиение пробелами
@@ -36,8 +36,8 @@ namespace ATM_Model.Primary_Classes
             }
         }
         [Browsable(false)]
-        public string DisplayCoveredNumber => DisplayNumber.Replace(DisplayNumber.Substring(10, 4), "****");
-        public string Pin => DisplayNumber.Substring(15);
+        public string DisplayCoveredNumber => DisplayNumber.Replace(DisplayNumber.Substring(10, 4), "****"); // отображение типа "0000 0000 **** 0000"
+        public string Pin => DisplayNumber.Substring(15); // последние 4 цифры номера 
         [Browsable(false)]
         public int AccountId { get; private set; }
         [Browsable(false)]
@@ -52,7 +52,7 @@ namespace ATM_Model.Primary_Classes
             long roll;
             while (true)
             {
-                roll = rnd.NextInt64(1, 9999999999999999);
+                roll = rnd.NextInt64(1000000000000000, 9999999999999999);
                 if (CentralDataStorage.FindCard(roll) == null)
                 {
                     Number = roll;
@@ -94,9 +94,9 @@ namespace ATM_Model.Primary_Classes
 
         public void Deactivate()
         {
+            CentralDataStorage.FindAccountById(AccountId)!.RemoveCard(this);
             AccountId = 0;
             Active = false;
-            CentralDataStorage.FindAccountById(AccountId)!.RemoveCard(this);
         }
     }
 }

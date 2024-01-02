@@ -2,7 +2,7 @@
 {
     public class Account
     {
-        int _nextId = 1;
+        int _nextId = 100001;
 
         public int Id { get; }
         public List<Card> Cards { get; }

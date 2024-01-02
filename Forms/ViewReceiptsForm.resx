@@ -117,32 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="newCardsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAoJJREFUWEfFlzFoFFEURYcQJIhIEBEREQuxEgmpbE0RJIQQggRJIWIhCJYiKUSs
-        ggQJYiEWVkFELFKIiJVYiASRYCEiIQQUCxERsRARQc+d3L9+Z2eyO/5ZvHBg97437/3d/f/NbJaqo2ff
-        7oAJuArP4SOswCmnNCsK74IpuA4v4Sf8qmDWl/27KLIbpuEGvILNGhb5BttcqjtxwR44ATfhNdRpWMa4
-        S1eLpJ1wDd5AasMiC25TLhK0iVajC1L4DA/hMvywt+JW5SLhihNTeA/D0OeyqqsToZi+0UHb7SL4zIkp
-        6NNud8lcvNexDPHqfUDwQZSYwjGXzMV7zYYQm7fdLoIXo8QU5lxP7INz9sVy3qxMBEeixBS0kRdhPfIC
-        +onK5wGBrfDdib1k1C3bRXC5kByjT6STcgZOwgxoUGk6duK4mYT9btcugvNQbKyv7QL0O613osm4m8bM
-        OKx4HxyAwzBkdO7LCPHNGHDpDWEMQphcYtEhxY6ARnS8uFQ+wLRbbAjjRZQwZE/H6Yu9NXhaEw05oT2m
-        yageusGpnibkSN5c4k2YXGoYvDl7t6E1ZlNFLe0t1X1kKzdHbb6zJe+uvUlbjYh6+mZVd9VWbmqjPYE1
-        W/KWQImXYKxBdJxVt9UrF4Y2Y+sxitf3ndgr1t2qXCQ0daOqouMC9HBRdmFTdL2ABTjdIOeh1gLGbDUi
-        6u113a73QOcn2xqiXljA36egKBLCKfhvCwhzYMJWI6JeWMCfQVQmEu44ccpWI6LeQdftuIBZJ2pC6i/a
-        FugHTU2hnLoMwC1Q3SW3KhcJmozxM57uYLptpxD+eX2FQ25VLZL0e92DT6B/PqmozmMYzrIs+w22daAh
-        ynhepQAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="receiptButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAN9JREFUWEftlyEOAjEQReuQSCRH4GgcAYdEIpFIJEdAIpFIJBIL/yf9ScOkYSHT
-        sE3mJS+7M23Dz6aISWNjBfdwCidw61xvco/vhgV8Zs/w2LBeQsMBaoO8w6tj/cjPGzRoE78ED/Ew3+fO
-        tX7HUF1wgveA/C2A6CfAGqo31B0U5fmyr57hfeEE1RsqL5soz5d99QzVBWf6CRB3oBX9BIg70Ip+AsQd
-        aEUEiAAfA/wy8XxTVwPwr8IFPan3RHTJTw4oBo5L2sghogziXXNGNPBTMSE3e0xAtZpj2QyOgZReG/V2
-        gXuLgy4AAAAASUVORK5CYII=
-</value>
-  </data>
+  <metadata name="viewReceiptsMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

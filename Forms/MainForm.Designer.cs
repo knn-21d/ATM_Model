@@ -45,18 +45,20 @@
             threeButton = new Button();
             twoButton = new Button();
             oneButton = new Button();
-            cardTextBox = new TextBox();
+            mainTextBox = new TextBox();
             displayListBox = new ListBox();
             label = new Label();
-            button1 = new Button();
+            ejectButton = new Button();
             newCardsButton = new Button();
             newCardsAmountLabel = new Label();
+            receiptButton = new Button();
+            receiptLabel = new Label();
             SuspendLayout();
             // 
             // confirmButton
             // 
             confirmButton.ForeColor = Color.FromArgb(0, 192, 0);
-            confirmButton.Location = new Point(238, 397);
+            confirmButton.Location = new Point(236, 397);
             confirmButton.Name = "confirmButton";
             confirmButton.Size = new Size(50, 50);
             confirmButton.TabIndex = 4;
@@ -91,6 +93,7 @@
             zeroButton.TabIndex = 7;
             zeroButton.Text = "0";
             zeroButton.UseVisualStyleBackColor = true;
+            zeroButton.MouseClick += DigitButtonClick;
             // 
             // tripleZeroButton
             // 
@@ -100,6 +103,7 @@
             tripleZeroButton.TabIndex = 8;
             tripleZeroButton.Text = "000";
             tripleZeroButton.UseVisualStyleBackColor = true;
+            tripleZeroButton.MouseClick += DigitButtonClick;
             // 
             // rightArrowButton
             // 
@@ -118,6 +122,7 @@
             nineButton.TabIndex = 12;
             nineButton.Text = "9";
             nineButton.UseVisualStyleBackColor = true;
+            nineButton.MouseClick += DigitButtonClick;
             // 
             // eightButton
             // 
@@ -127,6 +132,7 @@
             eightButton.TabIndex = 11;
             eightButton.Text = "8";
             eightButton.UseVisualStyleBackColor = true;
+            eightButton.MouseClick += DigitButtonClick;
             // 
             // sevenButton
             // 
@@ -136,6 +142,7 @@
             sevenButton.TabIndex = 10;
             sevenButton.Text = "7";
             sevenButton.UseVisualStyleBackColor = true;
+            sevenButton.MouseClick += DigitButtonClick;
             // 
             // leftArrowButton
             // 
@@ -145,6 +152,7 @@
             leftArrowButton.TabIndex = 9;
             leftArrowButton.Text = "←";
             leftArrowButton.UseVisualStyleBackColor = true;
+            leftArrowButton.MouseClick += LeftArrowButtonClick;
             // 
             // sixButton
             // 
@@ -154,6 +162,7 @@
             sixButton.TabIndex = 16;
             sixButton.Text = "6";
             sixButton.UseVisualStyleBackColor = true;
+            sixButton.MouseClick += DigitButtonClick;
             // 
             // fiveButton
             // 
@@ -163,6 +172,7 @@
             fiveButton.TabIndex = 15;
             fiveButton.Text = "5";
             fiveButton.UseVisualStyleBackColor = true;
+            fiveButton.MouseClick += DigitButtonClick;
             // 
             // fourButton
             // 
@@ -172,6 +182,7 @@
             fourButton.TabIndex = 14;
             fourButton.Text = "4";
             fourButton.UseVisualStyleBackColor = true;
+            fourButton.MouseClick += DigitButtonClick;
             // 
             // threeButton
             // 
@@ -181,6 +192,7 @@
             threeButton.TabIndex = 19;
             threeButton.Text = "3";
             threeButton.UseVisualStyleBackColor = true;
+            threeButton.MouseClick += DigitButtonClick;
             // 
             // twoButton
             // 
@@ -190,6 +202,7 @@
             twoButton.TabIndex = 18;
             twoButton.Text = "2";
             twoButton.UseVisualStyleBackColor = true;
+            twoButton.MouseClick += DigitButtonClick;
             // 
             // oneButton
             // 
@@ -199,14 +212,16 @@
             oneButton.TabIndex = 17;
             oneButton.Text = "1";
             oneButton.UseVisualStyleBackColor = true;
+            oneButton.MouseClick += DigitButtonClick;
             // 
-            // cardTextBox
+            // mainTextBox
             // 
-            cardTextBox.Location = new Point(12, 165);
-            cardTextBox.Name = "cardTextBox";
-            cardTextBox.PlaceholderText = "Вставьте карту...";
-            cardTextBox.Size = new Size(244, 23);
-            cardTextBox.TabIndex = 20;
+            mainTextBox.Enabled = false;
+            mainTextBox.Location = new Point(12, 165);
+            mainTextBox.Name = "mainTextBox";
+            mainTextBox.PlaceholderText = "Вставьте карту...";
+            mainTextBox.Size = new Size(274, 23);
+            mainTextBox.TabIndex = 20;
             // 
             // displayListBox
             // 
@@ -214,7 +229,7 @@
             displayListBox.ItemHeight = 15;
             displayListBox.Location = new Point(12, 12);
             displayListBox.Name = "displayListBox";
-            displayListBox.Size = new Size(274, 124);
+            displayListBox.Size = new Size(276, 124);
             displayListBox.TabIndex = 21;
             displayListBox.MouseDoubleClick += DisplayListBoxDoubleClick;
             // 
@@ -225,14 +240,17 @@
             label.Size = new Size(274, 23);
             label.TabIndex = 22;
             // 
-            // button1
+            // ejectButton
             // 
-            button1.Location = new Point(260, 165);
-            button1.Name = "button1";
-            button1.Size = new Size(26, 23);
-            button1.TabIndex = 23;
-            button1.Text = "⏏";
-            button1.UseVisualStyleBackColor = true;
+            ejectButton.Location = new Point(262, 165);
+            ejectButton.Name = "ejectButton";
+            ejectButton.Size = new Size(26, 23);
+            ejectButton.TabIndex = 23;
+            ejectButton.Text = "⏏";
+            ejectButton.UseVisualStyleBackColor = true;
+            ejectButton.Visible = false;
+            ejectButton.Click += EjectButtonClick;
+            ejectButton.MouseClick += EjectButtonClick;
             // 
             // newCardsButton
             // 
@@ -242,7 +260,7 @@
             newCardsButton.Size = new Size(42, 42);
             newCardsButton.TabIndex = 24;
             newCardsButton.UseVisualStyleBackColor = true;
-            newCardsButton.Click += NewCardsButtonClick;
+            newCardsButton.MouseClick += NewCardsButtonClick;
             // 
             // newCardsAmountLabel
             // 
@@ -253,21 +271,45 @@
             newCardsAmountLabel.Name = "newCardsAmountLabel";
             newCardsAmountLabel.Size = new Size(19, 15);
             newCardsAmountLabel.TabIndex = 25;
-            newCardsAmountLabel.Text = "12";
-            newCardsAmountLabel.TextAlign = ContentAlignment.TopRight;
+            newCardsAmountLabel.TextAlign = ContentAlignment.MiddleCenter;
             newCardsAmountLabel.Visible = false;
+            // 
+            // receiptButton
+            // 
+            receiptButton.Image = (Image)resources.GetObject("receiptButton.Image");
+            receiptButton.Location = new Point(246, 194);
+            receiptButton.Name = "receiptButton";
+            receiptButton.Size = new Size(42, 42);
+            receiptButton.TabIndex = 26;
+            receiptButton.UseVisualStyleBackColor = true;
+            receiptButton.MouseClick += ReceiptButtonClick;
+            // 
+            // receiptLabel
+            // 
+            receiptLabel.BackColor = Color.Transparent;
+            receiptLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            receiptLabel.ForeColor = Color.Red;
+            receiptLabel.Location = new Point(273, 221);
+            receiptLabel.Name = "receiptLabel";
+            receiptLabel.Size = new Size(15, 15);
+            receiptLabel.TabIndex = 27;
+            receiptLabel.Text = "!";
+            receiptLabel.TextAlign = ContentAlignment.MiddleCenter;
+            receiptLabel.Visible = false;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(300, 459);
+            Controls.Add(receiptLabel);
+            Controls.Add(receiptButton);
             Controls.Add(newCardsAmountLabel);
             Controls.Add(newCardsButton);
-            Controls.Add(button1);
+            Controls.Add(ejectButton);
             Controls.Add(label);
             Controls.Add(displayListBox);
-            Controls.Add(cardTextBox);
+            Controls.Add(mainTextBox);
             Controls.Add(threeButton);
             Controls.Add(twoButton);
             Controls.Add(oneButton);
@@ -284,8 +326,10 @@
             Controls.Add(pointButton);
             Controls.Add(cancelButton);
             Controls.Add(confirmButton);
+            KeyPreview = true;
             Name = "MainForm";
             Text = "ATM_Model";
+            KeyPress += MainFormKeyPress;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -308,11 +352,13 @@
         private Button threeButton;
         private Button twoButton;
         private Button oneButton;
-        private TextBox cardTextBox;
+        private TextBox mainTextBox;
         private ListBox displayListBox;
         private Label label;
-        private Button button1;
+        private Button ejectButton;
         private Button newCardsButton;
         private Label newCardsAmountLabel;
+        private Button receiptButton;
+        private Label receiptLabel;
     }
 }

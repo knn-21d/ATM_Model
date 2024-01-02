@@ -2,36 +2,58 @@
 {
     public class ReceiptWriter
     {
+        List<string> _printedReceipts = new();
+
+        public bool HasPrintedReceipts => _printedReceipts.Count > 0;
+
         public enum Operation
         {
             CashOut,
             CashIn,
-            Send
+            SendToCard,
+            SendToAccount,
+            AccountCreated, // неиспользованные
+            CardReleased    //
         }
 
-        public string Write(int accountId, long cardNumber, int operationResult, Operation operation, long? receiverCardNumber)
+        public void Write(int accountId, int operationResult, Operation operation, Card? receiverCard, Account? receiver, Card? releasedCard)
         {
-            Card? card = CentralDataStorage.FindCard(cardNumber);
+            Card? card = ATM.GetCard();
             string message;
 
             switch (operation)
             {
                 case Operation.CashOut:
-                    message = $"Снято {-operationResult} со счёта {accountId} по карте {card?.DisplayCoveredNumber}";
+                    message = $"Снято {operationResult} со счёта {accountId} по карте {card!.DisplayCoveredNumber}";
                     break;
                 case Operation.CashIn:
-                    message = $"Зачислено {operationResult} на счёт {accountId} по карте {card?.DisplayCoveredNumber}";
+                    message = $"Зачислено {operationResult} на счёт {accountId} по карте {card!.DisplayCoveredNumber}";
                     break;
-                case Operation.Send:
-                    Card? receiverCard = CentralDataStorage.FindCard((long)receiverCardNumber);
-                    message = $"Отправлено {operationResult} на карту {receiverCard?.DisplayCoveredNumber}";
+                case Operation.SendToCard:
+                    message = $"Отправлено {operationResult} на карту {receiverCard!.DisplayCoveredNumber}";
+                    break;
+                case Operation.SendToAccount:
+                    message = $"Отправлено {operationResult} на счёт №{receiverCard!.DisplayCoveredNumber}";
+                    break;
+                case Operation.AccountCreated:
+                    message = $"Открыт счёт №{accountId}; зачислено на счёт: {operationResult} ед.";
+                    break;
+                case Operation.CardReleased:
+                    message = $"Выпущена карта {releasedCard!.DisplayNumber} для счёта №{accountId}";
                     break;
                 default:
                     message = "Не удалось провести операцию!";
                     break;
             }
 
-            return message;
+            _printedReceipts.Add(message);
+        }
+
+        public List<string> ClearReceipts()
+        {
+            List<string> result = new(_printedReceipts);
+            _printedReceipts.Clear();
+            return result;
         }
     }
 }

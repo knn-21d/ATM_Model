@@ -17,19 +17,22 @@ namespace ATM_Model.Forms
             try
             {
                 ATM.CashFromBalance((int)cashOutNumericUpDown.Value);
+                Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return;
             }
-
-            Close();
         }
 
         private void CancelButtonClick(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void CashOutNumericUpDownValueChanged(object sender, EventArgs e)
+        {
+            cashOutNumericUpDown.Value -= cashOutNumericUpDown.Value % 100;
         }
     }
 }
