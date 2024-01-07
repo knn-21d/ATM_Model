@@ -1,27 +1,27 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
+    // сюда поступают только что оформленные и активированные карты
     public class NewCardsContainer
     {
-        List<Card> _content;
+        List<Card> _content; // содержимое
 
-        public int Amount => _content.Count;
+        public int Amount => _content.Count; // количество карт
 
         public NewCardsContainer()
         {
             _content = new List<Card>();
         }
 
-        public void Receive(List<Card> cards) => _content.Concat(cards);
+        public void Receive(List<Card> cards) => _content.Concat(cards); // поступление новых карт
 
-        public void Receive(Card card)
+        public void Receive(Card card) // поступление карты
         {
             _content.Add(card);
-            int n = Amount;
         }
 
-        public List<Card> GetCards() => new(_content);
+        public List<Card> GetCards() => new(_content); // отображает содержащиеся карты
 
-        public List<Card> Clear()
+        public List<Card> Clear() // то же, что и выше, только карты забираются из контейнера
         {
             var result = GetCards();
             _content.Clear();

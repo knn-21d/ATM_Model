@@ -2,6 +2,7 @@
 
 namespace ATM_Model.Forms
 {
+    // форма снятия наличных
     public partial class CashOutArgsForm : Form
     {
         public CashOutArgsForm()
@@ -19,7 +20,7 @@ namespace ATM_Model.Forms
                 ATM.CashFromBalance((int)cashOutNumericUpDown.Value);
                 Close();
             }
-            catch (Exception ex)
+            catch (Exception ex) // если недостаточно банкнот в аппарате или средств на счёте
             {
                 MessageBox.Show(ex.Message);
             }
@@ -32,7 +33,7 @@ namespace ATM_Model.Forms
 
         private void CashOutNumericUpDownValueChanged(object sender, EventArgs e)
         {
-            cashOutNumericUpDown.Value -= cashOutNumericUpDown.Value % 100;
+            cashOutNumericUpDown.Value -= cashOutNumericUpDown.Value % 100; // запрашиваемая сумма всегда будет кратна 100
         }
     }
 }

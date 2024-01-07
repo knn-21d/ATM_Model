@@ -2,6 +2,7 @@
 
 namespace ATM_Model.Forms
 {
+    // форма имитирует лоток для выдачи новых карт
     public partial class CardsContainerForm : Form
     {
         public CardsContainerForm(List<Card> content)

@@ -2,6 +2,7 @@
 
 namespace ATM_Model.Forms
 {
+    // форма открытия счёта, которая также имитирует загрузку банкнот
     public partial class CreateAccountArgsForm : Form
     {
         public CreateAccountArgsForm()

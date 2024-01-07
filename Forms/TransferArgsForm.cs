@@ -2,6 +2,7 @@
 
 namespace ATM_Model.Forms
 {
+    // форма перевода средств
     public partial class TransferArgsForm : Form
     {
         public TransferArgsForm()
@@ -15,11 +16,11 @@ namespace ATM_Model.Forms
         {
             try
             {
-                if (cardCheck.Checked)
+                if (cardCheck.Checked) // перевод на карту
                 {
                     ATM.SendMoneyToCard(Convert.ToInt64(addressTextBox.Text), (int)unitsNumericUpDown.Value, (int)centsNumericUpDown.Value);
                 }
-                else if (accountCheck.Checked)
+                else if (accountCheck.Checked) // перевод по счёту
                 {
                     ATM.SendMoneyToAccount(Convert.ToInt32(addressTextBox.Text), (int)unitsNumericUpDown.Value, (int)centsNumericUpDown.Value);
                 }
@@ -28,7 +29,7 @@ namespace ATM_Model.Forms
                 unitsNumericUpDown.Value = 0;
                 centsNumericUpDown.Value = 0;
             }
-            catch (Exception ex)
+            catch (Exception ex) // средств может не хватить
             {
                 MessageBox.Show(ex.Message);
             }
@@ -39,14 +40,14 @@ namespace ATM_Model.Forms
             Close();
         }
 
-        private void AccountCheckMouseClick(object sender, MouseEventArgs e)
+        private void AccountCheckMouseClick(object sender, MouseEventArgs e) // перевод по счёту
         {
             accountCheck.Checked = true;
             cardCheck.Checked = false;
             addressTextBox.PlaceholderText = "Введите номер счёта...";
         }
 
-        private void CardCheckMouseClick(object sender, MouseEventArgs e)
+        private void CardCheckMouseClick(object sender, MouseEventArgs e) // перевод по карте
         {
             accountCheck.Checked = false;
             cardCheck.Checked = true;

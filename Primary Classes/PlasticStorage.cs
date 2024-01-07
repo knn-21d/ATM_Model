@@ -1,5 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
+    // хранилище неактивных карт (новых и заблокированных)
     public class PlasticStorage
     {
         private readonly List<Card> _unusedCards;
@@ -13,12 +14,12 @@
             _newCardsContainer = container;
         }
 
-        public void Confiscate(Card card) // проверить
+        public void Confiscate(Card card) // изъять карту 
         {
             _confiscatedCards.Add(card);
         }
 
-        public void Release(int accountId) // проверить
+        public void Release(int accountId) // выдача карты
         {
             if (_unusedCards.Count == 0) throw new Exception("Выдача карт временно невозможна!");
             else
@@ -30,7 +31,7 @@
             }
         }
 
-        public void Release(int amount, int accountId) // проверить
+        public void Release(int amount, int accountId) // выдача amount карт
         {
             if (amount == 0)
             {
@@ -61,37 +62,11 @@
             }
         }
 
-        public void Load(int amount) // проверить
+        public void Load(int amount) // пополнить запас неиспользованных карт
         {
             for (int i = 0; i < amount; i++)
             {
                 _unusedCards.Add(new Card());
-            }
-        }
-
-        public void Unload(int amount) // проверить
-        {
-            if (amount > _unusedCards.Count)
-            {
-                amount = _unusedCards.Count;
-            }
-
-            for (int i = amount - 1; i >= 0; i--)
-            {
-                _unusedCards.RemoveAt(i);
-            }
-        }
-
-        public void UnloadConfiscated(int amount) // проверить
-        {
-            if (amount > _confiscatedCards.Count)
-            {
-                amount = _confiscatedCards.Count;
-            }
-
-            for (int i = amount - 1; i >= 0; i--)
-            {
-                _confiscatedCards.RemoveAt(i);
             }
         }
     }

@@ -1,8 +1,9 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
+    // чековый принтер
     public class ReceiptWriter
     {
-        List<string> _printedReceipts = new();
+        List<string> _printedReceipts = new(); // список готовых чеков
 
         public bool HasPrintedReceipts => _printedReceipts.Count > 0;
 
@@ -12,10 +13,11 @@
             CashIn,
             SendToCard,
             SendToAccount,
-            AccountCreated, // неиспользованные
-            CardReleased    //
+            AccountCreated,
+            CardReleased
         }
 
+        // печать чека
         public void Write(int accountId, int operationResult, Operation operation, Card? receiverCard, Account? receiver, Card? releasedCard)
         {
             Card? card = ATM.GetCard();
@@ -49,7 +51,7 @@
             _printedReceipts.Add(message);
         }
 
-        public List<string> ClearReceipts()
+        public List<string> ClearReceipts() // сорвать чеки
         {
             List<string> result = new(_printedReceipts);
             _printedReceipts.Clear();

@@ -3,6 +3,7 @@ using ATM_Model.Primary_Classes;
 
 namespace ATM_Model
 {
+    // главная форма управления банкоматом
     public partial class MainForm : Form
     {
         string enteredPin = "";
@@ -11,10 +12,11 @@ namespace ATM_Model
         {
             InitializeComponent();
             displayListBox.Items.Add("Открыть счёт");
-            confirmButton.Focus();
+            confirmButton.Focus(); /* костыль, чтобы работал enter (из-за фокуса первой кнопки на форме enter 
+                                      даже отказывается считываться методом MainFormKeyPress) */
         }
 
-        private void ActionChosen(string? action)
+        private void ActionChosen(string? action) // выбор операции/действия, в аргументы принимает строковое значение выбранного объекта displayListBox
         {
             switch (action)
             {
@@ -84,7 +86,7 @@ namespace ATM_Model
                             mainTextBox.Text = mainTextBox.Text.Insert(4 + i, " ");
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) // карта может быть не найдена
                     {
                         MessageBox.Show(ex.Message);
                     }
@@ -101,7 +103,12 @@ namespace ATM_Model
                         displayListBox.Items.Add("Отправить перевод");
                         displayListBox.Items.Add("Выход");
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) when (ex.Message == "Карта заблокирована!") // попыски исчерпаны
+                    {
+                        label.Text = "";
+                        mainTextBox.Text = "";
+                    }
+                    catch (Exception ex) // если попытки ещё не закончились
                     {
                         MessageBox.Show(ex.Message);
                     }
@@ -116,7 +123,7 @@ namespace ATM_Model
             }
         }
 
-        private void DisplayListBoxDoubleClick(object sender, MouseEventArgs e)
+        private void DisplayListBoxDoubleClick(object sender, MouseEventArgs e) // суть метода аналогична активации confirmButton
         {
             int index = displayListBox.IndexFromPoint(e.Location);
             var item = index == -1 || index >= displayListBox.Items.Count ? null : displayListBox.Items[index];
@@ -140,15 +147,7 @@ namespace ATM_Model
                 new CardsContainerForm(ATM.ClearContainer()).ShowDialog();
             }
             newCardsAmountLabel.Visible = false;
-        }
-
-        private void EjectButtonClick(object sender, MouseEventArgs e)
-        {
-            if (ATM.State != ATM.ServiceState.NoCard)
-            {
-                Card card = ATM.EjectCard()!;
-                MessageBox.Show($"Вы забрали карту: {card!.DisplayNumber}");
-            }
+            confirmButton.Focus(); // вернуть костыль на место
         }
 
         private void DigitButtonClick(object sender, MouseEventArgs e) // считывание с кнопок формы
@@ -162,15 +161,16 @@ namespace ATM_Model
             {
                 mainTextBox.Text += ((Button)sender).Text;
             }
+            confirmButton.Focus();
         }
 
-        private void RemoveLastSymbol()
+        private void RemoveLastSymbol() // стирание последнего символа...
         {
-            if (mainTextBox.Text.Length > 0 && ATM.State == ATM.ServiceState.NoCard)
+            if (mainTextBox.Text.Length > 0 && ATM.State == ATM.ServiceState.NoCard) // номера карты
             {
-                mainTextBox.Text = mainTextBox.Text.Remove(mainTextBox.Text.Length - 1); // стирание последнего символа
+                mainTextBox.Text = mainTextBox.Text.Remove(mainTextBox.Text.Length - 1);
             }
-            else if (label.Text.Length > 17 && ATM.State == ATM.ServiceState.NoPin)
+            else if (label.Text.Length > 17 && ATM.State == ATM.ServiceState.NoPin) // или же пин-кода
             {
                 label.Text = label.Text.Remove(label.Text.Length - 1);
                 enteredPin = enteredPin.Remove(enteredPin.Length - 1);
@@ -181,12 +181,12 @@ namespace ATM_Model
         {
             if (Int32.TryParse(e.KeyChar.ToString(), out int _)) // цифры
             {
-                if (ATM.State == ATM.ServiceState.NoPin && label.Text.Length < 21)
+                if (ATM.State == ATM.ServiceState.NoPin && label.Text.Length < 21) // больше 4 цифр пин-кода введено не будет
                 {
                     label.Text += '*';
                     enteredPin += e.KeyChar;
                 }
-                else if (ATM.State == ATM.ServiceState.NoCard)
+                else if (ATM.State == ATM.ServiceState.NoCard) // ввод карты
                 {
                     mainTextBox.Text += e.KeyChar;
                 }
@@ -195,11 +195,10 @@ namespace ATM_Model
             {
                 RemoveLastSymbol();
             }
+            // ещё здесь была попытка считывать enter
         }
 
-        private void LeftArrowButtonClick(object sender, MouseEventArgs e) => RemoveLastSymbol();
-
-        private void ReceiptButtonClick(object sender, MouseEventArgs e)
+        private void ReceiptButtonClick(object sender, MouseEventArgs e) // забрать все чеки
         {
             List<string> result = ATM.ClearReceipts();
             if (result.Count > 0)
@@ -207,14 +206,16 @@ namespace ATM_Model
                 new ViewReceiptsForm(result).ShowDialog();
                 receiptLabel.Visible = false;
             }
+            confirmButton.Focus();
         }
 
-        private void EjectButtonClick(object sender, EventArgs e)
+        private void EjectButtonClick(object sender, EventArgs e) // забрать уже "выплюнутую" банкоматом карту
         {
             MessageBox.Show($"Вы забрали карту {ejectedCard!.DisplayNumber}");
             ejectButton.Visible = false;
             mainTextBox.Size = new Size(274, 23);
             mainTextBox.Text = "";
+            confirmButton.Focus();
         }
     }
 }

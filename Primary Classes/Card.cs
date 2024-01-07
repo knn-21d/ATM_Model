@@ -13,11 +13,6 @@ namespace ATM_Model.Primary_Classes
                 char[] result = new char[19];
                 string number = Number.ToString();
 
-                //for (int i = 0; i < 17 - number.Length; i++) // дорисовка незначащих нулей
-                //{
-                //    number = '0' + number;
-                //}
-
                 int j = 0;
                 for (int i = 0; i < result.Length; i++) // разбиение пробелами
                 {
@@ -39,20 +34,20 @@ namespace ATM_Model.Primary_Classes
         public string DisplayCoveredNumber => DisplayNumber.Replace(DisplayNumber.Substring(10, 4), "****"); // отображение типа "0000 0000 **** 0000"
         public string Pin => DisplayNumber.Substring(15); // последние 4 цифры номера 
         [Browsable(false)]
-        public int AccountId { get; private set; }
+        public int AccountId { get; private set; } // номер связанного счёта (0, если карта неактивна)
         [Browsable(false)]
         public bool Active { get; private set; }
 
-        private int _triesLeft;
+        private int _triesLeft; // осталось попыток
 
-        public Card() // проверить
+        public Card()
         {
             Active = false;
-            Random rnd = new Random();
+            Random rnd = new();
             long roll;
             while (true)
             {
-                roll = rnd.NextInt64(1000000000000000, 9999999999999999);
+                roll = rnd.NextInt64(1000000000000000, 9999999999999999); // случайный 16-значный номер
                 if (CentralDataStorage.FindCard(roll) == null)
                 {
                     Number = roll;
@@ -62,7 +57,7 @@ namespace ATM_Model.Primary_Classes
             CentralDataStorage.AddCard(this);
         }
 
-        public bool TryAuthorize(string pin)
+        public bool TryAuthorize(string pin) // возвращает true в случае успеха авторизации или выбрасывает исключение
         {
             if (pin == Pin)
             {
@@ -84,7 +79,7 @@ namespace ATM_Model.Primary_Classes
             }
         }
 
-        public void Activate(int accountId)
+        public void Activate(int accountId) // активация карты и привязка её к счёту пользователя
         {
             AccountId = accountId;
             Active = true;
@@ -92,7 +87,7 @@ namespace ATM_Model.Primary_Classes
             _triesLeft = 3;
         }
 
-        public void Deactivate()
+        public void Deactivate() // блокировка карты
         {
             CentralDataStorage.FindAccountById(AccountId)!.RemoveCard(this);
             AccountId = 0;

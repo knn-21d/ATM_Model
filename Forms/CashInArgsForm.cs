@@ -2,6 +2,7 @@
 
 namespace ATM_Model.Forms
 {
+    // форма имитирует загрузку банкнот в банкомат
     public partial class CashInArgsForm : Form
     {
         public CashInArgsForm()

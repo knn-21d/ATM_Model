@@ -2,15 +2,15 @@
 {
     public class Account
     {
-        int _nextId = 100001;
+        static int _nextId = 100001; // номер следующего счёта при открытии
 
-        public int Id { get; }
-        public List<Card> Cards { get; }
-        int UnitsBalance { get; set; }
-        int CentsBalance { get; set; }
-        public string DisplayBalance
+        public int Id { get; } // номер счёта
+        public List<Card> Cards { get; } // связанные карты
+        int UnitsBalance { get; set; } // единицы
+        int CentsBalance { get; set; } // сотые
+        public string DisplayBalance // отображаемый баланс
         {
-            get // проверить
+            get
             {
                 string result = UnitsBalance.ToString();
 
@@ -23,7 +23,7 @@
             }
         }
 
-        public Account(int unitsBalance, int centsBalance)
+        public Account(int unitsBalance, int centsBalance) // может быть указан первичный баланс
         {
             Id = _nextId;
             _nextId++;
@@ -33,13 +33,13 @@
             CentralDataStorage.AddAccount(this);
         }
 
-        public void Add(int units, int cents) // проверить
+        public void Add(int units, int cents) // зачисление
         {
             UnitsBalance += (CentsBalance + cents) / 100 + units;
             CentsBalance = (CentsBalance + cents) % 100;
         }
 
-        public void Release(int units, int cents) // проверить
+        public void Release(int units, int cents) // отчисление
         {
             if (units > UnitsBalance || units == UnitsBalance && CentsBalance > cents)
             {
@@ -52,8 +52,8 @@
             }
         }
 
-        public void AddCard(Card card) => Cards.Add(card);
+        public void AddCard(Card card) => Cards.Add(card); // привязка карты к счёту
 
-        public void RemoveCard(Card card) => Cards.Remove(card);
+        public void RemoveCard(Card card) => Cards.Remove(card); // отвязка карты
     }
 }

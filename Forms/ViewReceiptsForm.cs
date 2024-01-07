@@ -1,5 +1,6 @@
 ﻿namespace ATM_Model.Forms
 {
+    // форма просмотра чеков
     public partial class ViewReceiptsForm : Form
     {
         List<string> _receipts;
@@ -17,7 +18,7 @@
             label.Text = receipts[0];
         }
 
-        private void ViewReceiptsMenuStripItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void ViewReceiptsMenuStripItemClicked(object sender, ToolStripItemClickedEventArgs e) // переключение между разными чеками
         {
             label.Text = _receipts[Int32.Parse(e.ClickedItem!.Text) - 1];
         }

@@ -1,5 +1,6 @@
 ﻿namespace ATM_Model.Primary_Classes
 {
+    // устройство считывания карт
     public class CardReader
     {
         Card? _currentCard;

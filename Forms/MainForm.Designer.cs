@@ -34,11 +34,9 @@
             pointButton = new Button();
             zeroButton = new Button();
             tripleZeroButton = new Button();
-            rightArrowButton = new Button();
             nineButton = new Button();
             eightButton = new Button();
             sevenButton = new Button();
-            leftArrowButton = new Button();
             sixButton = new Button();
             fiveButton = new Button();
             fourButton = new Button();
@@ -105,15 +103,6 @@
             tripleZeroButton.UseVisualStyleBackColor = true;
             tripleZeroButton.MouseClick += DigitButtonClick;
             // 
-            // rightArrowButton
-            // 
-            rightArrowButton.Location = new Point(236, 341);
-            rightArrowButton.Name = "rightArrowButton";
-            rightArrowButton.Size = new Size(50, 50);
-            rightArrowButton.TabIndex = 13;
-            rightArrowButton.Text = "→";
-            rightArrowButton.UseVisualStyleBackColor = true;
-            // 
             // nineButton
             // 
             nineButton.Location = new Point(180, 341);
@@ -143,16 +132,6 @@
             sevenButton.Text = "7";
             sevenButton.UseVisualStyleBackColor = true;
             sevenButton.MouseClick += DigitButtonClick;
-            // 
-            // leftArrowButton
-            // 
-            leftArrowButton.Location = new Point(12, 341);
-            leftArrowButton.Name = "leftArrowButton";
-            leftArrowButton.Size = new Size(50, 50);
-            leftArrowButton.TabIndex = 9;
-            leftArrowButton.Text = "←";
-            leftArrowButton.UseVisualStyleBackColor = true;
-            leftArrowButton.MouseClick += LeftArrowButtonClick;
             // 
             // sixButton
             // 
@@ -316,11 +295,9 @@
             Controls.Add(sixButton);
             Controls.Add(fiveButton);
             Controls.Add(fourButton);
-            Controls.Add(rightArrowButton);
             Controls.Add(nineButton);
             Controls.Add(eightButton);
             Controls.Add(sevenButton);
-            Controls.Add(leftArrowButton);
             Controls.Add(tripleZeroButton);
             Controls.Add(zeroButton);
             Controls.Add(pointButton);
@@ -341,11 +318,9 @@
         private Button zeroButton;
         private Button tripleZeroButton;
         private Button confirmButton;
-        private Button rightArrowButton;
         private Button nineButton;
         private Button eightButton;
         private Button sevenButton;
-        private Button leftArrowButton;
         private Button sixButton;
         private Button fiveButton;
         private Button fourButton;

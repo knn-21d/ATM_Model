@@ -2,6 +2,7 @@
 
 namespace ATM_Model.Forms
 {
+    // форма выпуска карт
     public partial class ReleaseCardArgsForm : Form
     {
         public ReleaseCardArgsForm()
@@ -13,10 +14,10 @@ namespace ATM_Model.Forms
         {
             try
             {
-                ATM.ReleaseCard((int)cardsAmountNumericUpDown.Value);
+                ATM.ReleaseCard((int)cardsAmountNumericUpDown.Value); // в метод передаётся запрашиваемое количество карт
                 Close();
             }
-            catch (Exception ex)
+            catch (Exception ex) // готовых к выдаче карт может не хватать
             {
                 MessageBox.Show(ex.Message);
             }

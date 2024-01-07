@@ -1,6 +1,3 @@
-using ATM_Model.Primary_Classes;
-using System.Runtime.InteropServices;
-
 namespace ATM_Model
 {
     internal static class Program
@@ -16,20 +13,5 @@ namespace ATM_Model
             ApplicationConfiguration.Initialize();
             Application.Run(new MainForm());
         }
-        
-        //static void Test(int accounts, int cards)
-        //{
-        //    Random rnd = new();
-        //    for (int i = 0; i < accounts; i++)
-        //    {
-        //        new Account(rnd.Next(0, 200000), rnd.Next(0, 99));
-        //    }
-
-        //    for (int i = 0; i < cards; i++)
-        //    {
-        //        var card = new Card();
-        //        card.Activate(rnd.Next(0, CentralDataStorage.GetAccounts.Count - 1));
-        //    }
-        //}
     }
 }
